@@ -14,6 +14,7 @@
 		622AA4C324509D5B00F142B9 /* PandemicNewsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 622AA4C224509D5B00F142B9 /* PandemicNewsTests.swift */; };
 		622AA4CE24509D5B00F142B9 /* PandemicNewsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 622AA4CD24509D5B00F142B9 /* PandemicNewsUITests.swift */; };
 		622AA4DC2450A73D00F142B9 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 622AA4DB2450A73D00F142B9 /* TabBarController.swift */; };
+		62FC6A002451FC1D00C16738 /* OpcionesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FC69FF2451FC1D00C16738 /* OpcionesTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		622AA4CD24509D5B00F142B9 /* PandemicNewsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PandemicNewsUITests.swift; sourceTree = "<group>"; };
 		622AA4CF24509D5B00F142B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		622AA4DB2450A73D00F142B9 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		62FC69FF2451FC1D00C16738 /* OpcionesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpcionesTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 				622AA4B424509D5B00F142B9 /* Assets.xcassets */,
 				622AA4B924509D5B00F142B9 /* Info.plist */,
 				622AA4DB2450A73D00F142B9 /* TabBarController.swift */,
+				62FC69FF2451FC1D00C16738 /* OpcionesTableViewCell.swift */,
 			);
 			path = PandemicNews;
 			sourceTree = "<group>";
@@ -256,6 +259,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				622AA4DC2450A73D00F142B9 /* TabBarController.swift in Sources */,
+				62FC6A002451FC1D00C16738 /* OpcionesTableViewCell.swift in Sources */,
 				622AA4B024509D5900F142B9 /* ViewController.swift in Sources */,
 				622AA4AE24509D5900F142B9 /* AppDelegate.swift in Sources */,
 			);
