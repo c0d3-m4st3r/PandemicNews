@@ -10,7 +10,9 @@ import UIKit
 
 class OpcionesTableViewCell: UITableViewCell {
 
+    //MARK: Properties
     
+    @IBOutlet weak var labelCell: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -30,7 +30,7 @@
             </objects>
             <point key="canvasLocation" x="-695" y="-235"/>
         </scene>
-        <!--Item-->
+        <!--Home-->
         <scene sceneID="zms-GR-qss">
             <objects>
                 <viewController id="Gng-Ei-Ei2" sceneMemberID="viewController">
@@ -246,13 +246,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="A86-jE-AZD"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="74e-Cb-xZI"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="HomeSinSeleccionar" id="74e-Cb-xZI"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6SA-Jj-g00" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="61.600000000000001" y="-504.19790104947532"/>
         </scene>
-        <!--Item-->
+        <!--Noticias-->
         <scene sceneID="MiH-zR-gpm">
             <objects>
                 <viewController id="Qbp-IJ-S12" sceneMemberID="viewController">
@@ -529,16 +529,16 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="W0m-gM-L9W"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="Afe-fZ-H3q"/>
+                    <tabBarItem key="tabBarItem" title="Noticias" image="NoticiasSinSeleccionar" id="Afe-fZ-H3q"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="65j-Eb-ZBF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="60" y="826.23688155922048"/>
         </scene>
-        <!--Item-->
+        <!--Configuración-->
         <scene sceneID="lrK-mM-x5t">
             <objects>
-                <viewController id="L5D-aw-GIZ" sceneMemberID="viewController">
+                <viewController id="L5D-aw-GIZ" customClass="ConfiguracionViewController" customModule="PandemicNews" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HHV-Hg-Fym">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -554,44 +554,22 @@
                                 <rect key="frame" x="16" y="97" width="343" height="131"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Hl0-6Z-hfj">
-                                        <rect key="frame" x="0.0" y="28" width="343" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Hl0-6Z-hfj" id="Eg9-o5-4Ez" customClass="OpcionesTableViewCell" customModule="PandemicNews" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yar-az-fQT">
-                                                    <rect key="frame" x="35704" y="11" width="42" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZHR-xu-FIl">
-                                                    <rect key="frame" x="15" y="12" width="42" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="L5D-aw-GIZ" id="aqz-UQ-zxO"/>
+                                    <outlet property="delegate" destination="L5D-aw-GIZ" id="7wr-ir-I4m"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="p6k-UO-ewU"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="n8a-3h-Z75"/>
+                    <tabBarItem key="tabBarItem" title="Configuración" image="ConfiguracionSinSeleccionar" id="n8a-3h-Z75"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="To0-aC-zo2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-620" y="825.33733133433293"/>
         </scene>
-        <!--Item-->
+        <!--Mapa-->
         <scene sceneID="tyC-nY-aPK">
             <objects>
                 <viewController id="F1J-Sg-6Tg" sceneMemberID="viewController">
@@ -636,11 +614,17 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="Kmn-d3-Ucl"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="pCw-dS-0Sh"/>
+                    <tabBarItem key="tabBarItem" title="Mapa" image="MapaSinSeleccionar" id="pCw-dS-0Sh"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="noN-YL-cWm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="60" y="154.27286356821591"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ConfiguracionSinSeleccionar" width="25" height="25"/>
+        <image name="HomeSinSeleccionar" width="25" height="25"/>
+        <image name="MapaSinSeleccionar" width="25" height="25"/>
+        <image name="NoticiasSinSeleccionar" width="25" height="25"/>
+    </resources>
 </document>
