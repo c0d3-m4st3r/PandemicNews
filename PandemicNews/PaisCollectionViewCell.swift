@@ -9,5 +9,9 @@
 import UIKit
 
 class PaisCollectionViewCell: UICollectionViewCell {
+    //Creacion variables de viewCell
+    @IBOutlet weak var banderaPais: UIImageView!
+    @IBOutlet weak var nombrePais: UILabel!
+    @IBOutlet weak var numeroInfectados: UILabel!
     
 }
