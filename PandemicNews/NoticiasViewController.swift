@@ -11,6 +11,7 @@ import UIKit
 class NoticiasViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     var noticias = [Noticia]()
+    var paisCategoria = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,24 +61,57 @@ class NoticiasViewController: UIViewController, UICollectionViewDataSource, UICo
 
         noticias = [Esp1, Esp2, Esp3, UK1, UK2, UK3, EEUU1, EEUU2, EEUU3, Ita1, Ita2, Ita3, Ch1, Ch2, Ch3, Ale1, Ale2, Ale3]
         
+        var count: Int
+        for noticia in noticias{
+            count = 0
+            for pais in paisCategoria{
+                if noticia.pais == pais{
+                    count += 1
+                }
+            }
+            if count == 0{
+                paisCategoria.append(noticia.pais)
+            }
+        }
+        
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return paisCategoria.count
     }
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return noticias.count
+        return 3
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        var noticiasPais = [Noticia]()
+        
+        for noticia in noticias{
+            if noticia.pais == paisCategoria[indexPath.section]{
+                noticiasPais.append(noticia)
+            }
+        }
+        
         let identifier = "noticia"
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! NoticiasCollectionViewCell
-        cell.titularNoticia.text = noticias[indexPath.row].titular
-        cell.imagenNoticia.image = noticias[indexPath.row].imagen
+        cell.titularNoticia.text = noticiasPais[indexPath.row].titular
+        cell.imagenNoticia.image = noticiasPais[indexPath.row].imagen
         
         cell.titularNoticia.textAlignment = .center
         
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let sectionHeaderView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "seccionPais", for: indexPath) as! SectionHeaderCollectionReusableView
+        
+        let seccion = paisCategoria[indexPath.section]
+        sectionHeaderView.tituloHeader.text = seccion
+        
+        return sectionHeaderView
+    }
     
 
     /*

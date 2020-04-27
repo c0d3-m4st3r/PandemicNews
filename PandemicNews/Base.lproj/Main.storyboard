@@ -20,7 +20,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="Gng-Ei-Ei2" kind="relationship" relationship="viewControllers" id="hMi-kc-KK9"/>
+                        <segue destination="zfF-71-WNC" kind="relationship" relationship="viewControllers" id="hMi-kc-KK9"/>
                         <segue destination="F1J-Sg-6Tg" kind="relationship" relationship="viewControllers" id="Yfr-Q6-glQ"/>
                         <segue destination="Qbp-IJ-S12" kind="relationship" relationship="viewControllers" id="pya-nG-hrL"/>
                         <segue destination="L5D-aw-GIZ" kind="relationship" relationship="viewControllers" id="Mw2-NB-YDN"/>
@@ -30,7 +30,107 @@
             </objects>
             <point key="canvasLocation" x="-695" y="-235"/>
         </scene>
-        <!--Home-->
+        <!--Title-->
+        <scene sceneID="mMN-V6-0tn">
+            <objects>
+                <viewController id="OT4-rG-W1z" customClass="PaisIndividualViewController" customModule="PandemicNews" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="YMQ-ni-iiL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Nombre país" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wu4-LS-GLv">
+                                <rect key="frame" x="74" y="75" width="262" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" cocoaTouchSystemColor="darkTextColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Casos confirmados:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2x7-QJ-upa">
+                                <rect key="frame" x="16" y="119" width="153" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Casos por 1 mill. de personas:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ULV-zl-QUs">
+                                <rect key="frame" x="16" y="159" width="228" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Curados:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kVf-Jx-bU5">
+                                <rect key="frame" x="16" y="202" width="70" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Fallecidos:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ufq-pi-bW9">
+                                <rect key="frame" x="16" y="246" width="81" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="num" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5T7-Io-21R">
+                                <rect key="frame" x="259" y="119" width="100" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="num" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y9f-hA-o93">
+                                <rect key="frame" x="259" y="159" width="100" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="num" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Izh-tF-0bo">
+                                <rect key="frame" x="259" y="201" width="100" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="num" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IBP-qd-7OY">
+                                <rect key="frame" x="259" y="245" width="100" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OPt-6G-2fZ">
+                                <rect key="frame" x="16" y="71" width="50" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2o1-vq-ZZq" customClass="customButton" customModule="PandemicNews" customModuleProvider="target">
+                                <rect key="frame" x="94" y="553" width="187" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Eliminar de la lista"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="6OS-Yr-icL"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Title" id="Rlo-fa-aLA"/>
+                    <connections>
+                        <outlet property="banderaPais" destination="OPt-6G-2fZ" id="9cj-PP-5wm"/>
+                        <outlet property="navItem" destination="Rlo-fa-aLA" id="qQG-jI-RiD"/>
+                        <outlet property="nombrePais" destination="Wu4-LS-GLv" id="Zjg-3Z-Zxi"/>
+                        <outlet property="numCasosPor1Mill" destination="Y9f-hA-o93" id="7GI-np-oev"/>
+                        <outlet property="numCurados" destination="Izh-tF-0bo" id="NbM-PY-GF2"/>
+                        <outlet property="numFallecidos" destination="IBP-qd-7OY" id="bA6-tt-8fo"/>
+                        <outlet property="numInfectados" destination="5T7-Io-21R" id="YOE-W0-dWR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PUd-ei-6Vp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1000.8" y="152.47376311844079"/>
+        </scene>
+        <!--Home View Controller-->
         <scene sceneID="zms-GR-qss">
             <objects>
                 <viewController id="Gng-Ei-Ei2" customClass="HomeViewController" customModule="PandemicNews" customModuleProvider="target" sceneMemberID="viewController">
@@ -38,11 +138,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" fixedFrame="YES" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="Tg3-xm-Ay6">
-                                <rect key="frame" x="0.0" y="52" width="375" height="56"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="KeT-0u-rPi">
                                 <rect key="frame" x="16" y="132" width="343" height="464"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -86,6 +181,7 @@
                                             <outlet property="banderaPais" destination="UNz-2b-ake" id="Hum-1w-Mav"/>
                                             <outlet property="nombrePais" destination="JwJ-zv-8Wr" id="euU-TT-loc"/>
                                             <outlet property="numeroInfectados" destination="qAK-P8-NcM" id="cym-XV-QdT"/>
+                                            <segue destination="OT4-rG-W1z" kind="show" id="xUb-4F-LcQ"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -94,27 +190,24 @@
                                     <outlet property="delegate" destination="Gng-Ei-Ei2" id="ZuA-Z1-a8n"/>
                                 </connections>
                             </collectionView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Lista de países" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zAW-A9-RPI">
-                                <rect key="frame" x="131" y="26" width="114" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pef-yV-ryt">
-                                <rect key="frame" x="332" y="24" width="27" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="AñadirPais"/>
-                            </button>
+                            <searchBar contentMode="redraw" fixedFrame="YES" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="Tg3-xm-Ay6">
+                                <rect key="frame" x="0.0" y="64" width="375" height="56"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="A86-jE-AZD"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Home" image="HomeSinSeleccionar" id="74e-Cb-xZI"/>
+                    <navigationItem key="navigationItem" id="7eM-Y7-fru"/>
+                    <connections>
+                        <outlet property="barraNavegacion" destination="7eM-Y7-fru" id="xkr-5c-qKD"/>
+                        <outlet property="collectionView" destination="KeT-0u-rPi" id="Wbo-oh-gDg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6SA-Jj-g00" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="61.600000000000001" y="-504.19790104947532"/>
+            <point key="canvasLocation" x="1000.8" y="-504.19790104947532"/>
         </scene>
         <!--Noticias-->
         <scene sceneID="MiH-zR-gpm">
@@ -137,13 +230,13 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="HN9-rQ-cWV">
                                     <size key="itemSize" width="107" height="107"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="headerReferenceSize" width="50" height="36"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="noticia" id="G8D-6c-de1" customClass="NoticiasCollectionViewCell" customModule="PandemicNews" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="107" height="107"/>
+                                        <rect key="frame" x="0.0" y="36" width="107" height="107"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="107" height="107"/>
@@ -168,6 +261,22 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="seccionPais" id="BoR-Im-P78" customClass="SectionHeaderCollectionReusableView" customModule="PandemicNews" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="36"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="País" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LpG-b0-CsL">
+                                            <rect key="frame" x="0.0" y="7" width="201" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <connections>
+                                        <outlet property="tituloHeader" destination="LpG-b0-CsL" id="nfb-1o-N1M"/>
+                                    </connections>
+                                </collectionReusableView>
                                 <connections>
                                     <outlet property="dataSource" destination="Qbp-IJ-S12" id="ybJ-5Y-T9s"/>
                                     <outlet property="delegate" destination="Qbp-IJ-S12" id="5EG-DY-iqM"/>
@@ -268,9 +377,27 @@
             </objects>
             <point key="canvasLocation" x="60" y="154.27286356821591"/>
         </scene>
+        <!--Home-->
+        <scene sceneID="cON-le-22y">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zfF-71-WNC" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Home" image="HomeSinSeleccionar" id="74e-Cb-xZI"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="gdf-dD-gO5">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Gng-Ei-Ei2" kind="relationship" relationship="rootViewController" id="LZG-7M-WkY"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xos-3d-eP3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="61.600000000000001" y="-504.19790104947532"/>
+        </scene>
     </scenes>
     <resources>
-        <image name="AñadirPais" width="25" height="25"/>
         <image name="ConfiguracionSinSeleccionar" width="25" height="25"/>
         <image name="HomeSinSeleccionar" width="25" height="25"/>
         <image name="MapaSinSeleccionar" width="25" height="25"/>

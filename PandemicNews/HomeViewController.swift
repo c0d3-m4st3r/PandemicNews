@@ -13,11 +13,24 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     //Array de paises
     var paises = [Pais]()
     
+    @IBOutlet weak var barraNavegacion: UINavigationItem!
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        barraNavegacion.title = "Lista de paises"
+        
         cargaPaises()
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let item = sender as? UICollectionViewCell
+        let indexPath = collectionView.indexPath(for: item!)
+        let detailVC = segue.destination as! PaisIndividualViewController
+        detailVC.paisIndividual = paises[(indexPath?.row)!]
     }
     
     private func cargaPaises(){
