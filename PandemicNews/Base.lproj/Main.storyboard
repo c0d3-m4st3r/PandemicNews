@@ -33,7 +33,7 @@
         <!--Mapa-->
         <scene sceneID="Hc4-9k-CRm">
             <objects>
-                <viewController id="sqs-kg-YPs" customClass="mapaViewController" customModule="PandemicNews" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="sqs-kg-YPs" customClass="PaisIndividualViewController" customModule="PandemicNews" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4O8-Zt-pTR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -67,7 +67,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <webView multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FoA-iA-Ieh">
-                                <rect key="frame" x="28" y="299" width="318" height="279"/>
+                                <rect key="frame" x="28" y="338" width="318" height="279"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
@@ -380,7 +380,7 @@
         <!--Mapa-->
         <scene sceneID="tyC-nY-aPK">
             <objects>
-                <viewController id="F1J-Sg-6Tg" customClass="mapaViewController" customModule="PandemicNews" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="F1J-Sg-6Tg" customClass="mapawebview" customModule="PandemicNews" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iIo-LS-UjM">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -414,7 +414,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <webView multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Hy-ZI-fd8">
-                                <rect key="frame" x="28" y="296" width="318" height="279"/>
+                                <rect key="frame" x="28" y="295" width="318" height="279"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.36078431372549019" green="0.38823529411764707" blue="0.40392156862745099" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
@@ -423,6 +423,11 @@
                         <viewLayoutGuide key="safeArea" id="Kmn-d3-Ucl"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Mapa" image="MapaSinSeleccionar" id="pCw-dS-0Sh"/>
+                    <connections>
+                        <outlet property="numInfectados" destination="R9o-Ie-foM" id="2Dn-h2-Cn0"/>
+                        <outlet property="numPaises" destination="Kes-Pv-SD7" id="pRw-UY-8UM"/>
+                        <outlet property="numRecuperados" destination="uje-dn-k6g" id="e6k-7S-lla"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="noN-YL-cWm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
