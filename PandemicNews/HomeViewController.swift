@@ -7,8 +7,42 @@
 //
 
 import UIKit
+import Foundation
 
 class HomeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+
+    struct Response: Decodable{
+        let paisesCol: [Paises]
+    }
+    
+    struct Paises: Decodable{
+        var country: String
+        var country_abbreviation: String
+        var total_cases: String
+        var new_cases: String
+        var total_deaths: String
+        var new_deaths: String
+        var total_recovered: String
+        var active_cases: String
+        var serious_critical: String
+        var cases_per_mill_pop: String
+        var flag: String
+        
+        init(country: String, country_abbreviation: String, total_cases: String, new_cases: String, total_deaths: String, new_deaths: String, total_recovered: String, active_cases: String, serious_critical: String, cases_per_mill_pop: String, flag: String) {
+            self.country = country
+            self.country_abbreviation = country_abbreviation
+            self.total_cases = total_cases
+            self.new_cases = new_cases
+            self.total_deaths = total_deaths
+            self.new_deaths = new_deaths
+            self.total_recovered = total_recovered
+            self.active_cases = active_cases
+            self.serious_critical = serious_critical
+            self.cases_per_mill_pop = cases_per_mill_pop
+            self.flag = flag
+        }
+    }
+    
     
     //Array de paises
     var paises = [Pais]()
@@ -34,8 +68,40 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     private func cargaPaises(){
+        
+        let urlString = "https://corona-virus-stats.herokuapp.com/api/v1/cases/countries-search"
+        if let url = URL(string: urlString)
+        {
+            let task = URLSession.shared.dataTask(with: url) { data, res, err in
+                print(res!)
+                
+                if err != nil{
+                    print(err!)
+                    return
+                }
+                
+                
+                do{
+                    if let json  = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any]{
+                        if let country = json["country"] as? [String]{
+                            print(country)
+                        }
+                    }
+                } catch let error as NSError{
+                    print("Error during JSON serialization: \(error.localizedDescription)")
+                }
+                
+            }
+            task.resume()
+            print("terminao")
+        }
+        
+        
+        
+        
+        
         //Cargamos las fotos de los paises
-        let fotoEsp = UIImage(named: "Espana")
+  /*      let fotoEsp = UIImage(named: "Espana")
         let fotoReinoUnido = UIImage(named: "ReinoUnido")
         let fotoEeuu = UIImage(named: "EstadosUnidos")
         let fotoAlemania = UIImage(named: "Alemania")
@@ -54,6 +120,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         paises.sort{
             ($0.numeroInfectados) > ($1.numeroInfectados)
         }
+ */
         
     }
     
@@ -65,9 +132,9 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         let identifier = "pais"
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! PaisCollectionViewCell
-        cell.nombrePais.text = paises[indexPath.row].nombre
-        cell.numeroInfectados.text = paises[indexPath.row].numeroInfectados.description
-        cell.banderaPais.image = paises[indexPath.row].bandera
+        cell.nombrePais.text = paises[indexPath.row].country
+        cell.numeroInfectados.text = paises[indexPath.row].total_cases.description
+        //cell.banderaPais.image = paises[indexPath.row].flag
         
         cell.nombrePais.textAlignment = .center
         cell.numeroInfectados.textAlignment = .center

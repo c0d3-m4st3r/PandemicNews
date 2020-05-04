@@ -25,9 +25,9 @@ class PaisIndividualViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
          
-        cargaPais()
+        //cargaPais()
     }
-    private func cargaPais(){
+   /* private func cargaPais(){
         navItem.title = "País individual"
         banderaPais.image = paisIndividual?.bandera
         nombrePais.text = paisIndividual?.nombre
@@ -36,7 +36,7 @@ class PaisIndividualViewController: UIViewController {
         numCurados.text = paisIndividual?.recuperados.description
         numFallecidos.text = paisIndividual?.fallecidos.description
     }
-
+*/
     
 
     /*

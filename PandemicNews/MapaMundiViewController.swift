@@ -23,12 +23,12 @@ class MapaMundiViewController: UIViewController, WKNavigationDelegate {
         paisesInfectados.text = "0"
         recuperadosTotales.text = "0"
         
-        let myURL = URL(string: "https://www.google.com/covid19-map/?hl=es-419")
+        let myURL = URL(string: "https://www.trackcorona.live/map")
         let myRequest = URLRequest(url: myURL!)
         
         
         webView.load(myRequest)
-        
+        	
 
     }
     

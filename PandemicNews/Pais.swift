@@ -8,26 +8,26 @@
 
 import UIKit
 
-class Pais {
+class Pais: Codable {
     
     //Aributos de Pais
-    var nombre: String
-    var bandera: UIImage?
-    var numeroInfectados: Int
-    var casosPorMillPersonas: Float
-    var recuperados: Int
-    var fallecidos: Int
+    var country: String
+    var flag: String
+    var total_cases: Int
+    var cases_per_mill_pop: Float
+    var total_recovered: Int
+    var total_deaths: Int
     
-    init(nombre: String, bandera: UIImage?, numeroInfectados: Int, casosPorMillPersonas: Float, recuperados: Int, fallecidos: Int){
+    init(nombre: String, bandera: String, numeroInfectados: Int, casosPorMillPersonas: Float, recuperados: Int, fallecidos: Int){
         
         
         //Dando valor a atributos
-        self.nombre = nombre
-        self.bandera = bandera
-        self.numeroInfectados = numeroInfectados
-        self.casosPorMillPersonas = casosPorMillPersonas
-        self.recuperados = recuperados
-        self.fallecidos = fallecidos
+        self.country = nombre
+        self.flag = bandera
+        self.total_cases = numeroInfectados
+        self.cases_per_mill_pop = casosPorMillPersonas
+        self.total_recovered = recuperados
+        self.total_deaths = fallecidos
     }
     
     
