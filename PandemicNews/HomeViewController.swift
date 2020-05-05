@@ -11,38 +11,6 @@ import Foundation
 
 class HomeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
 
-    struct Response: Decodable{
-        let paisesCol: [Paises]
-    }
-    
-    struct Paises: Decodable{
-        var country: String
-        var country_abbreviation: String
-        var total_cases: String
-        var new_cases: String
-        var total_deaths: String
-        var new_deaths: String
-        var total_recovered: String
-        var active_cases: String
-        var serious_critical: String
-        var cases_per_mill_pop: String
-        var flag: String
-        
-        init(country: String, country_abbreviation: String, total_cases: String, new_cases: String, total_deaths: String, new_deaths: String, total_recovered: String, active_cases: String, serious_critical: String, cases_per_mill_pop: String, flag: String) {
-            self.country = country
-            self.country_abbreviation = country_abbreviation
-            self.total_cases = total_cases
-            self.new_cases = new_cases
-            self.total_deaths = total_deaths
-            self.new_deaths = new_deaths
-            self.total_recovered = total_recovered
-            self.active_cases = active_cases
-            self.serious_critical = serious_critical
-            self.cases_per_mill_pop = cases_per_mill_pop
-            self.flag = flag
-        }
-    }
-    
     
     //Array de paises
     var paises = [Pais]()
@@ -58,7 +26,16 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         // Do any additional setup after loading the view.
         barraNavegacion.title = "Lista de paises"
         
-        cargaPaises()
+        paises = cargaPaises()
+        for country in paises {
+            print("-----------------------")
+            print(country.country)
+            print(country.flag)
+            print(country.total_cases)
+            print(country.total_deaths)
+            print(country.cases_per_mill_pop)
+            print(country.total_recovered)
+        }
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let item = sender as? UICollectionViewCell
@@ -67,34 +44,101 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         detailVC.paisIndividual = paises[(indexPath?.row)!]
     }
     
-    private func cargaPaises(){
+    private func cargaPaises() -> [Pais]{
         
-        let urlString = "https://corona-virus-stats.herokuapp.com/api/v1/cases/countries-search"
+        var Paises = [Pais]()
+        
+        let urlString = "https://corona-virus-stats.herokuapp.com/api/v1/cases/countries-search?limit=200"
         if let url = URL(string: urlString)
         {
-            let task = URLSession.shared.dataTask(with: url) { data, res, err in
-                print(res!)
+            let task = URLSession.shared.dataTask(with: url, completionHandler: {(data, response, error) -> Void  in
+                print(response!)
                 
-                if err != nil{
-                    print(err!)
+                /*https://stackoverflow.com/questions/48016242/swift-urlsession-completion-handlers */
+                if error != nil{
+                    print(error!)
                     return
                 }
                 
-                
+                guard let mime = response?.mimeType, mime == "application/json" else {
+                    print("Wrong Mine type!")
+                    return
+                    
+                }
                 do{
-                    if let json  = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any]{
-                        if let country = json["country"] as? [String]{
-                            print(country)
+                   
+                    if let json  = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any] {
+                        if let vector = json["data"] as? [String: Any]{
+                            for (key, value) in vector {
+                                if key == "rows"{
+                                    if let datos = value as? [Any] {
+                                        for dato in datos {
+                                            if let pais = dato as? [String: Any] {
+                                                
+                                                var country = Pais(nombre: "", bandera: "", numeroInfectados: "", casosPorMillPersonas: "", recuperados: "", fallecidos: "")
+                                                
+                                                for (llave, valor) in pais {
+                                                    
+                                                    if llave == "country" {
+                                                        country.country = valor as! String
+                                                        
+                                                    }
+                                                    if llave == "total_cases" {
+                                                        country.total_cases = valor as! String
+                                                    }
+                                                    if llave == "total_deaths" {
+                                                        country.total_deaths = valor as! String
+                                                    }
+                                                    if llave == "total_recovered" {
+                                                        country.total_recovered = valor as! String
+                                                    }
+                                                    if llave == "cases_per_mill_pop" {
+                                                        country.cases_per_mill_pop = valor as! String
+                                                    }
+                                                    if llave == "flag" {
+                                                        country.flag = valor as! String
+                                                    }
+                                                    
+                                                }
+                                                Paises.append(country)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
+                       
                     }
-                } catch let error as NSError{
+                   
+                    
+                } catch {
+                    
                     print("Error during JSON serialization: \(error.localizedDescription)")
                 }
-                
+               
+            }).resume()
+            for country in Paises {
+                print("-----------------------")
+                print(country.country)
+                print(country.flag)
+                print(country.total_cases)
+                print(country.total_deaths)
+                print(country.cases_per_mill_pop)
+                print(country.total_recovered)
             }
-            task.resume()
+           
             print("terminao")
         }
+        for country in Paises {
+            print("-----------------------")
+            print(country.country)
+            print(country.flag)
+            print(country.total_cases)
+            print(country.total_deaths)
+            print(country.cases_per_mill_pop)
+            print(country.total_recovered)
+        }
+        return Paises
         
         
         
