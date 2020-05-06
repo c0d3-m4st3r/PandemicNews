@@ -82,6 +82,10 @@
                                 <rect key="frame" x="94" y="553" width="187" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Eliminar de la lista"/>
+                                <connections>
+                                    <action selector="eliminarPais:" destination="OT4-rG-W1z" eventType="touchUpInside" id="BlV-re-jtA"/>
+                                    <segue destination="Gng-Ei-Ei2" kind="show" id="HH8-iI-N78"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="num" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5T7-Io-21R">
                                 <rect key="frame" x="236" y="120" width="100" height="21"/>
@@ -434,4 +438,7 @@
         <image name="MapaSinSeleccionar" width="25" height="25"/>
         <image name="NoticiasSinSeleccionar" width="25" height="25"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="HH8-iI-N78"/>
+    </inferredMetricsTieBreakers>
 </document>

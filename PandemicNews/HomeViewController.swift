@@ -9,11 +9,35 @@
 import UIKit
 import Foundation
 
+
+extension UIImageView {
+    func downloaded(from url: URL, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
+        contentMode = mode
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard
+                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
+                let data = data, error == nil,
+                let image = UIImage(data: data)
+                else { return }
+            DispatchQueue.main.async() {
+                self.image = image
+            }
+            }.resume()
+    }
+    func downloaded(from link: String, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
+        guard let url = URL(string: link) else { return }
+        downloaded(from: url, contentMode: mode)
+    }
+}
+
+
 class HomeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
 
     
     //Array de paises
-    var paises = [Pais]()
+    public var paises = [Pais]()
+    public var paisesFinal = [Pais]()
     
     @IBOutlet weak var barraNavegacion: UINavigationItem!
     
@@ -22,39 +46,17 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         barraNavegacion.title = "Lista de paises"
-        
-        paises = cargaPaises()
-        for country in paises {
-            print("-----------------------")
-            print(country.country)
-            print(country.flag)
-            print(country.total_cases)
-            print(country.total_deaths)
-            print(country.cases_per_mill_pop)
-            print(country.total_recovered)
-        }
-    }
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let item = sender as? UICollectionViewCell
-        let indexPath = collectionView.indexPath(for: item!)
-        let detailVC = segue.destination as! PaisIndividualViewController
-        detailVC.paisIndividual = paises[(indexPath?.row)!]
-    }
-    
-    private func cargaPaises() -> [Pais]{
-        
-        var Paises = [Pais]()
         
         let urlString = "https://corona-virus-stats.herokuapp.com/api/v1/cases/countries-search?limit=200"
         if let url = URL(string: urlString)
         {
-            let task = URLSession.shared.dataTask(with: url, completionHandler: {(data, response, error) -> Void  in
+            let task = URLSession.shared.dataTask(with: url) { data,response,error in
                 print(response!)
                 
-                /*https://stackoverflow.com/questions/48016242/swift-urlsession-completion-handlers */
+        
                 if error != nil{
                     print(error!)
                     return
@@ -66,7 +68,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
                     
                 }
                 do{
-                   
+                    
                     if let json  = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any] {
                         if let vector = json["data"] as? [String: Any]{
                             for (key, value) in vector {
@@ -75,8 +77,8 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
                                         for dato in datos {
                                             if let pais = dato as? [String: Any] {
                                                 
-                                                var country = Pais(nombre: "", bandera: "", numeroInfectados: "", casosPorMillPersonas: "", recuperados: "", fallecidos: "")
-                                                
+                                                var country = Pais(nombre: "", bandera: "", numeroInfectados: 0, casosPorMillPersonas: "", recuperados: "", fallecidos: "")
+                                                var guardaNum = ""
                                                 for (llave, valor) in pais {
                                                     
                                                     if llave == "country" {
@@ -84,7 +86,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
                                                         
                                                     }
                                                     if llave == "total_cases" {
-                                                        country.total_cases = valor as! String
+                                                        guardaNum = valor as! String
                                                     }
                                                     if llave == "total_deaths" {
                                                         country.total_deaths = valor as! String
@@ -100,36 +102,40 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
                                                     }
                                                     
                                                 }
-                                                Paises.append(country)
+                                                guardaNum = guardaNum.replacingOccurrences(of: ",", with: "")
+                                                country.total_cases = (guardaNum as NSString).integerValue
+                                                
+                                                self.paises.append(country)
                                             }
                                         }
                                     }
                                 }
                             }
                         }
-                       
                     }
-                   
                     
                 } catch {
                     
                     print("Error during JSON serialization: \(error.localizedDescription)")
                 }
-               
-            }).resume()
-            for country in Paises {
-                print("-----------------------")
-                print(country.country)
-                print(country.flag)
-                print(country.total_cases)
-                print(country.total_deaths)
-                print(country.cases_per_mill_pop)
-                print(country.total_recovered)
+                
+                
+                self.paises.sort{
+                    ($0.total_cases) > ($1.total_cases)
+                }
+                
+                DispatchQueue.main.async{
+                    self.collectionView.reloadData()
+                }
             }
-           
-            print("terminao")
+            task.resume()
         }
-        for country in Paises {
+        
+        
+        
+        
+        
+        /*for country in paises{
             print("-----------------------")
             print(country.country)
             print(country.flag)
@@ -138,63 +144,51 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
             print(country.cases_per_mill_pop)
             print(country.total_recovered)
         }
-        return Paises
-        
-        
-        
-        
-        
-        //Cargamos las fotos de los paises
-  /*      let fotoEsp = UIImage(named: "Espana")
-        let fotoReinoUnido = UIImage(named: "ReinoUnido")
-        let fotoEeuu = UIImage(named: "EstadosUnidos")
-        let fotoAlemania = UIImage(named: "Alemania")
-        let fotoItalia = UIImage(named: "Italia")
-        let fotoChina = UIImage(named: "China")
-        //Creamos los paises
-        let espana = Pais(nombre: "España", bandera: fotoEsp, numeroInfectados: 219764, casosPorMillPersonas: 4657, recuperados: 92355, fallecidos: 22524)
-        let reinoUnido = Pais(nombre: "Reino Unido", bandera: fotoReinoUnido, numeroInfectados: 143464, casosPorMillPersonas: 2140.3, recuperados: 1918, fallecidos: 19506)
-        let italia = Pais(nombre: "Italia", bandera: fotoItalia, numeroInfectados: 192994, casosPorMillPersonas: 3211.7, recuperados: 60498, fallecidos: 25969)
-        let eeuu = Pais(nombre: "Estados Unidos", bandera: fotoEeuu, numeroInfectados: 889999, casosPorMillPersonas: 2691.7, recuperados: 85922, fallecidos: 50363)
-        let alemania = Pais(nombre: "Alemania", bandera: fotoAlemania, numeroInfectados: 153129, casosPorMillPersonas: 1839.6, recuperados: 103300, fallecidos: 5575)
-        let china = Pais(nombre: "China", bandera: fotoChina, numeroInfectados: 82804, casosPorMillPersonas: 58.9, recuperados: 77257, fallecidos: 4632)
-        
-        //Añadimos los paises al vector de paises
-        paises = [espana, reinoUnido, italia, eeuu, alemania, china]
-        paises.sort{
-            ($0.numeroInfectados) > ($1.numeroInfectados)
-        }
  */
         
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let item = sender as? UICollectionViewCell
+        let indexPath = collectionView.indexPath(for: item!)
+        let detailVC = segue.destination as! PaisIndividualViewController
+        
+        detailVC.index = indexPath!
+        detailVC.paisIndividual = paises[(indexPath?.row)!]
+        
+    }
+    
+    func eliminarPais(item: IndexPath){
+        //paises.remove(at: item.row)
+        collectionView?.deleteItems(at: [item])
+        collectionView?.reloadItems(at: [item])
+    }
+        
+    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return paises.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
+       
         let identifier = "pais"
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! PaisCollectionViewCell
+        
+        paisesFinal.append(paises[indexPath.row])
         cell.nombrePais.text = paises[indexPath.row].country
         cell.numeroInfectados.text = paises[indexPath.row].total_cases.description
-        //cell.banderaPais.image = paises[indexPath.row].flag
-        
+        cell.banderaPais.contentMode = .scaleAspectFill
+        cell.banderaPais.downloaded(from: paises[indexPath.row].flag)
         cell.nombrePais.textAlignment = .center
         cell.numeroInfectados.textAlignment = .center
         
+        
+        
         return cell
+        
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
+

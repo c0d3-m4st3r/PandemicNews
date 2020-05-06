@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol PaisIndividualViewControllerDelegate: class{
+    func delete(cell: PaisCollectionViewCell)
+}
+
 class PaisIndividualViewController: UIViewController {
     
     @IBOutlet weak var banderaPais: UIImageView!
@@ -19,24 +23,43 @@ class PaisIndividualViewController: UIViewController {
     @IBOutlet weak var navItem: UINavigationItem!
     @IBOutlet weak var elimButton: UIButton!
     
-    
+    weak var delegate: PaisIndividualViewControllerDelegate?
     var paisIndividual: Pais?
+    var collectionViewPais: UICollectionView?
+    var arrayPaises: [Pais]?
+    var index: IndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
          
-        //cargaPais()
+        cargaPais()
     }
-   /* private func cargaPais(){
+    private func cargaPais(){
         navItem.title = "País individual"
-        banderaPais.image = paisIndividual?.bandera
-        nombrePais.text = paisIndividual?.nombre
-        numInfectados.text = paisIndividual?.numeroInfectados.description
-        numCasosPor1Mill.text = paisIndividual?.casosPorMillPersonas.description
-        numCurados.text = paisIndividual?.recuperados.description
-        numFallecidos.text = paisIndividual?.fallecidos.description
+        banderaPais.contentMode = .scaleAspectFill
+        banderaPais.downloaded(from: paisIndividual?.flag ?? "")
+        nombrePais.text = paisIndividual?.country
+        numInfectados.text = paisIndividual?.total_cases.description
+        numCasosPor1Mill.text = paisIndividual?.cases_per_mill_pop
+        numCurados.text = paisIndividual?.total_recovered
+        numFallecidos.text = paisIndividual?.total_deaths
     }
-*/
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let detailVC = segue.destination as! HomeViewController
+        detailVC.eliminarPais(item: index!)
+    }
+    
+    @IBAction func eliminarPais(_ sender: UIButton){
+        print("Botón presionado")
+        
+        
+        
+        
+        
+        
+    }
+
     
 
     /*

@@ -8,17 +8,17 @@
 
 import UIKit
 
-class Pais: Codable {
+class Pais {
     
     //Aributos de Pais
     var country: String
     var flag: String
-    var total_cases: String
+    var total_cases: Int
     var cases_per_mill_pop: String
     var total_recovered: String
     var total_deaths: String
     
-    init(nombre: String, bandera: String, numeroInfectados: String, casosPorMillPersonas: String, recuperados: String, fallecidos: String){
+    init(nombre: String, bandera: String, numeroInfectados: Int, casosPorMillPersonas: String, recuperados: String, fallecidos: String){
         
         
         //Dando valor a atributos
