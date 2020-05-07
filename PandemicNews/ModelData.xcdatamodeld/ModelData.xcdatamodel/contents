@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="17G8030" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Country" representedClassName="Country" syncable="YES" codeGenerationType="class">
+        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="flag" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="total_cases" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="total_cases_per_mill_pop" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="total_deaths" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="total_recovered" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Country" positionX="-54" positionY="-9" width="128" height="135"/>
+    </elements>
+</model>
