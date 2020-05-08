@@ -84,7 +84,7 @@
                                 <state key="normal" title="Eliminar de la lista"/>
                                 <connections>
                                     <action selector="eliminarPais:" destination="OT4-rG-W1z" eventType="touchUpInside" id="BlV-re-jtA"/>
-                                    <segue destination="Gng-Ei-Ei2" kind="show" id="HH8-iI-N78"/>
+                                    <segue destination="Gng-Ei-Ei2" kind="show" identifier="detailSegue" id="HH8-iI-N78"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="num" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5T7-Io-21R">
@@ -185,7 +185,7 @@
                                             <outlet property="banderaPais" destination="UNz-2b-ake" id="Hum-1w-Mav"/>
                                             <outlet property="nombrePais" destination="JwJ-zv-8Wr" id="euU-TT-loc"/>
                                             <outlet property="numeroInfectados" destination="qAK-P8-NcM" id="cym-XV-QdT"/>
-                                            <segue destination="OT4-rG-W1z" kind="show" id="xUb-4F-LcQ"/>
+                                            <segue destination="OT4-rG-W1z" kind="show" identifier="detailSegue" id="xUb-4F-LcQ"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -203,15 +203,98 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="A86-jE-AZD"/>
                     </view>
-                    <navigationItem key="navigationItem" id="7eM-Y7-fru"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="swY-L1-Y93" customClass="HomeNavigationBar" customModule="PandemicNews" customModuleProvider="target">
+                        <barButtonItem key="rightBarButtonItem" title="addPaisButton" image="AñadirPais" id="0qE-RR-g2S">
+                            <connections>
+                                <segue destination="zDc-Xu-NXw" kind="show" id="lmX-8m-XKa"/>
+                            </connections>
+                        </barButtonItem>
+                        <connections>
+                            <outlet property="rightBarButtonItem" destination="0qE-RR-g2S" id="Py3-w0-i4g"/>
+                        </connections>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="barraNavegacion" destination="7eM-Y7-fru" id="xkr-5c-qKD"/>
+                        <outlet property="barraNavegacion" destination="swY-L1-Y93" id="uJw-IA-xac"/>
                         <outlet property="collectionView" destination="KeT-0u-rPi" id="Wbo-oh-gDg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6SA-Jj-g00" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1000.8" y="-504.19790104947532"/>
+        </scene>
+        <!--Add Pais View Controller-->
+        <scene sceneID="UGx-Nz-Xqc">
+            <objects>
+                <viewController id="zDc-Xu-NXw" customClass="AddPaisViewController" customModule="PandemicNews" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zMy-dA-WoQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EbU-Cu-OBe">
+                                <rect key="frame" x="0.0" y="97" width="375" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <segue destination="P1N-Cd-F75" kind="show" id="T96-Wp-CIJ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pr5-mf-yDn">
+                                <rect key="frame" x="0.0" y="135" width="375" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <segue destination="8bg-mM-MkZ" kind="show" id="b26-gF-vd5"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="lCf-t7-HrZ"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aTh-Jz-Agd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1629.5999999999999" y="-504.19790104947532"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="glp-EA-Jrq">
+            <objects>
+                <viewController id="P1N-Cd-F75" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="chg-aZ-Eut">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lR5-hT-Xkc">
+                                <rect key="frame" x="166" y="177" width="86" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="yhM-rn-Asr"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OsZ-U1-NJ9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2720.8000000000002" y="-606.74662668665667"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="AOc-rX-WGG">
+            <objects>
+                <viewController id="8bg-mM-MkZ" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="xx7-Xa-asS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="ahb-SN-TjB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dvb-hH-EfN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2721" y="152"/>
         </scene>
         <!--Noticias-->
         <scene sceneID="MiH-zR-gpm">
@@ -433,12 +516,13 @@
         </scene>
     </scenes>
     <resources>
+        <image name="AñadirPais" width="25" height="25"/>
         <image name="ConfiguracionSinSeleccionar" width="25" height="25"/>
         <image name="HomeSinSeleccionar" width="25" height="25"/>
         <image name="MapaSinSeleccionar" width="25" height="25"/>
         <image name="NoticiasSinSeleccionar" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="HH8-iI-N78"/>
+        <segue reference="LZG-7M-WkY"/>
     </inferredMetricsTieBreakers>
 </document>

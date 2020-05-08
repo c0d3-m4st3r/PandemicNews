@@ -50,7 +50,8 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         // Do any additional setup after loading the view.
         barraNavegacion.title = "Lista de paises"
         
-        cargaPaises()
+        
+        //cargaPaises()
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -59,12 +60,21 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         do{
             let results = try managedContext.fetch(fetchRequest)
-            
             paises = results as! [NSManagedObject]
+           /*
+             for pais in paises{
+                managedContext.delete(pais)
+            }
+            try managedContext.save()
+ */
         }catch let error as NSError{
              print("No ha sido posible cargar \(error), \(error.userInfo)")
             
         }
+        
+       
+        
+        print(paises.count)
         for country in paises{
             print("-----------------------")
             print(country.value(forKey: "country" ))
@@ -168,13 +178,17 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
  */
         
     }
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let item = sender as? UICollectionViewCell
-        let indexPath = collectionView.indexPath(for: item!)
-        let detailVC = segue.destination as! PaisIndividualViewController
-        
-        detailVC.index = indexPath!
+        if(segue.identifier == "detailSegue"){
+            let item = sender as? UICollectionViewCell
+            let indexPath = collectionView.indexPath(for: item!)
+            let detailVC = segue.destination as! PaisIndividualViewController
+            
+            detailVC.index = indexPath!
       /*  detailVC.paisIndividual = paises[(indexPath?.row)!] */
+        }
         
     }
     
@@ -214,7 +228,6 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
                                             if let pais = dato as? [String: Any] {
                                                 
                                                 var country = Pais(nombre: "", bandera: "", numeroInfectados: "", casosPorMillPersonas: "", recuperados: "", fallecidos: "")
-                                                var guardaNum = ""
                                                 for (llave, valor) in pais {
                                                     
                                                     if llave == "country" {
@@ -238,8 +251,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
                                                     }
                                                     
                                                 }
-                                                //guardaNum = guardaNum.replacingOccurrences(of: ",", with: "")
-                                               // country.total_cases = (guardaNum as NSString).integerValue
+                                                
                                                 DispatchQueue.main.async {
                                                      self.guardaPais(paisData: country)
                                                 }
@@ -299,10 +311,6 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
        
         let identifier = "pais"
-     /*
-        var casosTotales = paises[indexPath.row].value(forKey: "total_cases") as! Int
-        var casosTotalesString = String(casosTotales)
-        */
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! PaisCollectionViewCell
       
        
