@@ -8,11 +8,15 @@
         <attribute name="total_deaths" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="total_recovered" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="CountryNumberAlert" representedClassName="CountryNumberAlert" syncable="YES" codeGenerationType="class">
+        <attribute name="numero" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="CountrySelectedAlert" representedClassName="CountrySelectedAlert" syncable="YES" codeGenerationType="class">
         <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
         <element name="Country" positionX="-54" positionY="-9" width="128" height="135"/>
         <element name="CountrySelectedAlert" positionX="-54" positionY="36" width="128" height="60"/>
+        <element name="CountryNumberAlert" positionX="-54" positionY="36" width="128" height="60"/>
     </elements>
 </model>

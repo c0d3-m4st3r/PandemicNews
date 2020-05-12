@@ -32,7 +32,7 @@ extension UIImageView {
 }
 
 
-class HomeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class HomeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIAlertViewDelegate {
 
     
     //Array de paises
@@ -40,8 +40,11 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     
     @IBOutlet weak var barraNavegacion: UINavigationItem!
+
     
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    
     
     
     override func viewDidLoad() {
@@ -78,8 +81,8 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         for country in paises{
             print("-----------------------")
             print(country.value(forKey: "country" ))
-           
         }
+        muestraAlert()
    /*
         let urlString = "https://corona-virus-stats.herokuapp.com/api/v1/cases/countries-search?limit=200"
         if let url = URL(string: urlString)
@@ -327,6 +330,109 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         
     }
     
+     func muestraAlert() {
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.persistentContainer.viewContext
+        //array de paises ya guardados en la entidad CountrySelectedAlert
+        var paisGuardado: [NSManagedObject]
+        //Peticion
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CountrySelectedAlert")
+        var nombrePais = ""
+        
+        do{
+            let results = try managedContext.fetch(fetchRequest)
+            paisGuardado = results as! [NSManagedObject]
+            //Si hay algun pais lo borra puesto que solo debe haber uno
+            for paisG in paisGuardado{
+                nombrePais = paisG.value(forKey: "country") as! String
+            }
+            try managedContext.save()
+            
+        }catch let error as NSError{
+            print("No ha sido posible cargar \(error), \(error.userInfo)")
+            
+        }
+        
+        let numero = getPaisNumero()
+        
+        let alertController = UIAlertController(title: "Alerta de casos", message: "El pais \(nombrePais), has superado los \(numero) casos", preferredStyle: .alert)
 
+        
+        let saveAction = UIAlertAction(title: "Aceptar", style: .default, handler: nil)
+    
+        alertController.addAction(saveAction)
+    
+        
+        
+        let Pais = getNombrePais(nombrePais: nombrePais)
+        var numeroGuardado = Pais.value(forKey: "total_cases") as! String
+        numeroGuardado = numeroGuardado.replacingOccurrences(of: ",", with: "")
+        let numeroGuardadoInt = (numeroGuardado as NSString).integerValue
+        let numeroGuardadoAlert = (numero as NSString).integerValue
+        if(numeroGuardadoInt >= numeroGuardadoAlert) {
+            self.present(alertController, animated: true, completion: nil)
+            
+        }
+    }
+    
+    func getPaisNumero() -> String {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.persistentContainer.viewContext
+        //array de paises ya guardados en la entidad CountrySelectedAlert
+        var paisGuardado: [NSManagedObject]
+        //Peticion
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CountryNumberAlert")
+        var numeroPais = ""
+        
+        do{
+            let results = try managedContext.fetch(fetchRequest)
+            paisGuardado = results as! [NSManagedObject]
+            //Si hay algun pais lo borra puesto que solo debe haber uno
+            for paisG in paisGuardado{
+                numeroPais = paisG.value(forKey: "numero") as! String
+            }
+            try managedContext.save()
+            
+        }catch let error as NSError{
+            print("No ha sido posible cargar \(error), \(error.userInfo)")
+            
+        }
+        return numeroPais
+    }
+    
+    func getNombrePais(nombrePais: String) -> NSManagedObject{
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.persistentContainer.viewContext
+        //array de paises ya guardados en la entidad CountrySelectedAlert
+        var paisGuardado: [NSManagedObject]
+        //Peticion
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Country")
+        var Pais: NSManagedObject!
+        
+        do{
+            let results = try managedContext.fetch(fetchRequest)
+            paisGuardado = results as! [NSManagedObject]
+            //Si hay algun pais lo borra puesto que solo debe haber uno
+            for paisG in paisGuardado{
+                if(nombrePais == paisG.value(forKey: "country") as! String){
+                    Pais = paisG
+                    
+                }
+            }
+            try managedContext.save()
+            
+        }catch let error as NSError{
+            print("No ha sido posible cargar \(error), \(error.userInfo)")
+            
+        }
+        return Pais
+    }
+        
+    
+    
+        
+    
 }
 
