@@ -7,10 +7,9 @@
 //
 
 import UIKit
+import CoreData
 
-protocol PaisIndividualViewControllerDelegate: class{
-    func delete(cell: PaisCollectionViewCell)
-}
+
 
 class PaisIndividualViewController: UIViewController {
     
@@ -21,12 +20,9 @@ class PaisIndividualViewController: UIViewController {
     @IBOutlet weak var numCurados: UILabel!
     @IBOutlet weak var numFallecidos: UILabel!
     @IBOutlet weak var navItem: UINavigationItem!
-    @IBOutlet weak var elimButton: UIButton!
     
-    weak var delegate: PaisIndividualViewControllerDelegate?
-    var paisIndividual: Pais?
-    var collectionViewPais: UICollectionView?
-    var arrayPaises: [Pais]?
+    
+    var paisIndividual: NSManagedObject?
     var index: IndexPath?
     
     override func viewDidLoad() {
@@ -37,25 +33,51 @@ class PaisIndividualViewController: UIViewController {
     private func cargaPais(){
         navItem.title = "País individual"
         banderaPais.contentMode = .scaleAspectFill
-        banderaPais.downloaded(from: paisIndividual?.flag ?? "")
-        nombrePais.text = paisIndividual?.country
-        numInfectados.text = paisIndividual?.total_cases.description
-        numCasosPor1Mill.text = paisIndividual?.cases_per_mill_pop
-        numCurados.text = paisIndividual?.total_recovered
-        numFallecidos.text = paisIndividual?.total_deaths
-    }
+        
+        if(paisIndividual?.value(forKey: "flag") != nil){
+            banderaPais.downloaded(from: paisIndividual?.value(forKey: "flag") as! String)
+        }else{
+            if(paisIndividual?.value(forKey: "flagImage") != nil){
+                banderaPais.image = UIImage(data :paisIndividual?.value(forKey: "flagImage") as! Data)
+            }
+        }
+        nombrePais.text = paisIndividual?.value(forKey: "country") as! String
+        numInfectados.text = paisIndividual?.value(forKey: "total_cases") as! String
+        numCasosPor1Mill.text = paisIndividual?.value(forKey: "total_cases_per_mill_pop") as! String
+        numCurados.text = paisIndividual?.value(forKey: "total_recovered") as! String
+        numFallecidos.text = paisIndividual?.value(forKey: "total_deaths") as! String
+        
+ }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let detailVC = segue.destination as! HomeViewController
-        detailVC.eliminarPais(item: index!)
-    }
     
     @IBAction func eliminarPais(_ sender: UIButton){
         print("Botón presionado")
         
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        //instanciamos la entidad para guardar el pais
+        let entity = NSEntityDescription.entity( forEntityName: "DeletedCountries", in: managedContext)
+        let pais = NSManagedObject(entity: entity!, insertInto: managedContext)
+        
+        let paisElegido = paisIndividual?.value(forKey: "country") as! String
+        //guardamos el pais
+        pais.setValue(paisElegido, forKey: "country")
+        
+        do{
+            try managedContext.save()
+            
+        }catch let error as NSError{
+            print("No ha sido posible guardar \(error), \(error.userInfo)")
+        }
         
         
-        
+        self.navigationController?.popViewController(animated: true)
+    
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let homeView = segue.destination as! HomeViewController
         
         
     }

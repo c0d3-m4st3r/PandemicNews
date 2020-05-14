@@ -1,16 +1,16 @@
 //
-//  RecibirDeViewController.swift
+//  AddPaisPorDefectoViewController.swift
 //  PandemicNews
 //
-//  Created by user152439 on 5/11/20.
+//  Created by user152439 on 5/14/20.
 //  Copyright © 2020 FJPAFRV2020. All rights reserved.
 //
 
 import UIKit
 import CoreData
 
-class RecibirDeViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
-    
+class AddPaisPorDefectoViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+
     public var paises = [NSManagedObject]()
     
     @IBOutlet var picker: UIPickerView!
@@ -35,7 +35,7 @@ class RecibirDeViewController: UIViewController, UIPickerViewDelegate, UIPickerV
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Country")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DeletedCountries")
         
         do{
             let results = try managedContext.fetch(fetchRequest)
@@ -59,7 +59,7 @@ class RecibirDeViewController: UIViewController, UIPickerViewDelegate, UIPickerV
     
     //La respuesta del picker view por cada componente que se le pasa
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return paises[row].value(forKey: "Country") as! String
+        return paises[row].value(forKey: "country") as! String
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -74,38 +74,22 @@ class RecibirDeViewController: UIViewController, UIPickerViewDelegate, UIPickerV
         //array de paises ya guardados en la entidad CountrySelectedAlert
         var paisGuardado: [NSManagedObject]
         //Peticion
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CountrySelectedAlert")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DeletedCountries")
         do{
             let results = try managedContext.fetch(fetchRequest)
             paisGuardado = results as! [NSManagedObject]
             //Si hay algun pais lo borra puesto que solo debe haber uno
-             for paisG in paisGuardado{
-                managedContext.delete(paisG)
-             }
-             try managedContext.save()
+            for paisG in paisGuardado{
+                if(paisG.value(forKey: "country") as! String == paises[elegido].value(forKey: "country") as! String){
+                    managedContext.delete(paisG)
+                }
+            }
+            try managedContext.save()
             
         }catch let error as NSError{
             print("No ha sido posible cargar \(error), \(error.userInfo)")
             
         }
-        //instanciamos la entidad para guardar el pais
-        let entity = NSEntityDescription.entity( forEntityName: "CountrySelectedAlert", in: managedContext)
-        let pais = NSManagedObject(entity: entity!, insertInto: managedContext)
-        
-        let paisElegido = paises[elegido].value(forKey: "country") as! String
-        //guardamos el pais
-        pais.setValue(paisElegido, forKey: "country")
-        
-        do{
-            try managedContext.save()
-            
-        }catch let error as NSError{
-            print("No ha sido posible guardar \(error), \(error.userInfo)")
-        }
-        
-        
-     
     }
-    
 
 }

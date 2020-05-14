@@ -44,7 +44,10 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    
+    override func viewDidAppear(_ animated: Bool) {
+        fetchPaises()
+        
+    }
     
     
     override func viewDidLoad() {
@@ -53,134 +56,16 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         // Do any additional setup after loading the view.
         barraNavegacion.title = "Lista de paises"
         
+        borraPaises()
         
-        //cargaPaises()
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Country")
-        
-        do{
-            let results = try managedContext.fetch(fetchRequest)
-            paises = results as! [NSManagedObject]
-           /*
-             for pais in paises{
-                managedContext.delete(pais)
-            }
-            try managedContext.save()
- */
-        }catch let error as NSError{
-             print("No ha sido posible cargar \(error), \(error.userInfo)")
-            
-        }
-        
-       
-        
-        print(paises.count)
-        for country in paises{
-            print("-----------------------")
-            print(country.value(forKey: "country" ))
-        }
-        muestraAlert()
-   /*
-        let urlString = "https://corona-virus-stats.herokuapp.com/api/v1/cases/countries-search?limit=200"
-        if let url = URL(string: urlString)
-        {
-            let task = URLSession.shared.dataTask(with: url) { data,response,error in
-                print(response!)
-                
-        
-                if error != nil{
-                    print(error!)
-                    return
-                }
-                
-                guard let mime = response?.mimeType, mime == "application/json" else {
-                    print("Wrong Mine type!")
-                    return
-                    
-                }
-                do{
-                    
-                    if let json  = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any] {
-                        if let vector = json["data"] as? [String: Any]{
-                            for (key, value) in vector {
-                                if key == "rows"{
-                                    if let datos = value as? [Any] {
-                                        for dato in datos {
-                                            if let pais = dato as? [String: Any] {
-                                                
-                                                var country = Pais(nombre: "", bandera: "", numeroInfectados: 0, casosPorMillPersonas: "", recuperados: "", fallecidos: "")
-                                                var guardaNum = ""
-                                                for (llave, valor) in pais {
-                                                    
-                                                    if llave == "country" {
-                                                        country.country = valor as! String
-                                                        
-                                                    }
-                                                    if llave == "total_cases" {
-                                                        guardaNum = valor as! String
-                                                    }
-                                                    if llave == "total_deaths" {
-                                                        country.total_deaths = valor as! String
-                                                    }
-                                                    if llave == "total_recovered" {
-                                                        country.total_recovered = valor as! String
-                                                    }
-                                                    if llave == "cases_per_mill_pop" {
-                                                        country.cases_per_mill_pop = valor as! String
-                                                    }
-                                                    if llave == "flag" {
-                                                        country.flag = valor as! String
-                                                    }
-                                                    
-                                                }
-                                                guardaNum = guardaNum.replacingOccurrences(of: ",", with: "")
-                                                country.total_cases = (guardaNum as NSString).integerValue
-                                                
-                                                self.paises.append(country)
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    
-                } catch {
-                    
-                    print("Error during JSON serialization: \(error.localizedDescription)")
-                }
-                
-                
-                self.paises.sort{
-                    ($0.total_cases) > ($1.total_cases)
-                }
-                
-                DispatchQueue.main.async{
-                    self.collectionView.reloadData()
-                }
-            }
-            task.resume()
-        }
-        
-      */
+        cargaPaises()
         
         
-        /*
-        for country in self.paises{
-            print("-----------------------")
-            print(country.country)
-            print(country.flag)
-            print(country.total_cases)
-            print(country.total_deaths)
-            print(country.cases_per_mill_pop)
-            print(country.total_recovered)
-        }
- */
+  
         
     }
+    
+    
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -190,16 +75,94 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
             let detailVC = segue.destination as! PaisIndividualViewController
             
             detailVC.index = indexPath!
-      /*  detailVC.paisIndividual = paises[(indexPath?.row)!] */
+            detailVC.paisIndividual = paises[(indexPath?.row)!] 
         }
         
     }
     
-    func eliminarPais(item: IndexPath){
-        //paises.remove(at: item.row)
-        collectionView?.deleteItems(at: [item])
-        collectionView?.reloadItems(at: [item])
+    func borraPaises(){
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Country")
+        
+        do{
+            let results = try managedContext.fetch(fetchRequest)
+            let Paises = results as! [NSManagedObject]
+             for pais in Paises{
+                managedContext.delete(pais)
+             }
+             try managedContext.save()
+            
+        }catch let error as NSError{
+            print("No ha sido posible cargar \(error), \(error.userInfo)")
+            
+        }
     }
+    
+    func fetchPaises(){
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        //Request de paises desacargados de la api
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Country")
+        
+        do{
+            let results = try managedContext.fetch(fetchRequest)
+            paises = results as! [NSManagedObject]
+            
+        }catch let error as NSError{
+            print("No ha sido posible cargar \(error), \(error.userInfo)")
+            
+        }
+        //Request de paises personalizados añadidos por el usuario
+        var paisesPersonalizados: [NSManagedObject]!
+        let fetchRequest2 = NSFetchRequest<NSFetchRequestResult>(entityName: "PersonalizedCountries")
+        do{
+            let results = try managedContext.fetch(fetchRequest2)
+            paisesPersonalizados = results as! [NSManagedObject]
+            for paisPersonalizado in paisesPersonalizados{
+                //Insertamos el pais personalizado en el array de paises que muestra la collection view
+                paises.insert(paisPersonalizado, at: 0)
+                
+                
+                
+            }
+            
+        }catch let error as NSError{
+            print("No ha sido posible cargar \(error), \(error.userInfo)")
+            
+        }
+        //Request de paises eliminados
+        var paisesEliminados: [NSManagedObject]!
+        let fetchRequest3 = NSFetchRequest<NSFetchRequestResult>(entityName: "DeletedCountries")
+        do{
+            let results = try managedContext.fetch(fetchRequest3)
+             paisesEliminados = results as! [NSManagedObject]
+            
+            
+        }catch let error as NSError{
+            print("No ha sido posible cargar \(error), \(error.userInfo)")
+            
+        }
+        //Eliminamos los paises qu estan en paises eliminados del array que muestra la collection view
+        for paisEliminado in paisesEliminados{
+            var i = 0
+            for pais in paises{
+                if(pais.value(forKey: "country") as! String == paisEliminado.value(forKey: "country") as! String){
+                    paises.remove(at: i)
+                }
+                i += 1
+            }
+        }
+        
+        
+        
+        self.collectionView.reloadData()
+    }
+    
   
     func cargaPaises(){
         
@@ -255,7 +218,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
                                                     
                                                 }
                                                 
-                                                DispatchQueue.main.async {
+                                                DispatchQueue.main.sync {
                                                      self.guardaPais(paisData: country)
                                                 }
                                                 
@@ -300,9 +263,20 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         do{
             try managedContext.save()
             
-            paises.append(pais)
+            
         }catch let error as NSError{
             print("No ha sido posible guardar \(error), \(error.userInfo)")
+        }
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Country")
+        
+        do {
+            let results = try managedContext.fetch(fetchRequest)
+            if(results.count == 200) {
+                fetchPaises()
+                //muestraAlert()
+            }
+        }catch let error as NSError{
+            print("No ha sido posible cargar \(error), \(error.userInfo)")
         }
         
     }
@@ -312,18 +286,24 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-       
+        
         let identifier = "pais"
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! PaisCollectionViewCell
       
-       
+        
         cell.nombrePais.text = paises[indexPath.row].value(forKey: "country") as? String
         cell.numeroInfectados.text = paises[indexPath.row].value(forKey: "total_cases") as? String
         cell.banderaPais.contentMode = .scaleAspectFill
-        cell.banderaPais.downloaded(from: paises[indexPath.row].value(forKey: "flag") as? String ?? "")
+        if(paises[indexPath.row].value(forKey: "flag") != nil){
+            cell.banderaPais.downloaded(from: paises[indexPath.row].value(forKey: "flag") as? String ?? "")
+        }else{
+            if(paises[indexPath.row].value(forKey: "flagImage") != nil){
+                cell.banderaPais.image = UIImage(data :paises[indexPath.row].value(forKey: "flagImage") as! Data)
+            }
+        }
         cell.nombrePais.textAlignment = .center
         cell.numeroInfectados.textAlignment = .center
-      
+        
         
         
         return cell
@@ -429,7 +409,8 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
         return Pais
     }
-        
+    
+    
     
     
         

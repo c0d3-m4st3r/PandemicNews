@@ -14,9 +14,23 @@
     <entity name="CountrySelectedAlert" representedClassName="CountrySelectedAlert" syncable="YES" codeGenerationType="class">
         <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="DeletedCountries" representedClassName="DeletedCountries" syncable="YES" codeGenerationType="class">
+        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="PersonalizedCountries" representedClassName="PersonalizedCountries" syncable="YES" codeGenerationType="class">
+        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="flag" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="flagImage" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="total_cases" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="total_cases_per_mill_pop" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="total_deaths" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="total_recovered" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Country" positionX="-54" positionY="-9" width="128" height="135"/>
-        <element name="CountrySelectedAlert" positionX="-54" positionY="36" width="128" height="60"/>
         <element name="CountryNumberAlert" positionX="-54" positionY="36" width="128" height="60"/>
+        <element name="CountrySelectedAlert" positionX="-54" positionY="36" width="128" height="60"/>
+        <element name="DeletedCountries" positionX="-54" positionY="36" width="128" height="60"/>
+        <element name="PersonalizedCountries" positionX="-54" positionY="36" width="128" height="150"/>
     </elements>
 </model>
