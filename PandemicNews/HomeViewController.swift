@@ -352,6 +352,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         var paisGuardado: [NSManagedObject]
         //Peticion para saber cual es el pais que tenemos seleccionado para que nos muestre la alerta
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CountrySelectedAlert")
+        
         var nombrePais = ""
         
         do{
@@ -379,13 +380,13 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     
         
         //Comprobamos si el pais tiene más casos de los que el usuario quiere que se le notifique
-        let Pais = getNombrePais(nombrePais: nombrePais)
-        var numeroGuardado = Pais.value(forKey: "total_cases") as! String
+        
+        var numeroGuardado = getNombrePais(nombrePais: nombrePais)
         numeroGuardado = numeroGuardado.replacingOccurrences(of: ",", with: "")
         let numeroGuardadoInt = (numeroGuardado as NSString).integerValue
         let numeroGuardadoAlert = (numero as NSString).integerValue
         //Si es asi se muestra la alerta, en caso contrario no
-        if(numeroGuardadoInt >= numeroGuardadoAlert) {
+        if(numeroGuardadoInt >= numeroGuardadoAlert && numeroGuardado != "" && nombrePais != "" ) {
             self.present(alertController, animated: true, completion: nil)
             
         }
@@ -396,6 +397,8 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         let managedContext = appDelegate.persistentContainer.viewContext
         //array de paises ya guardados en la entidad CountrySelectedAlert
         var paisGuardado: [NSManagedObject]
+        let entity = NSEntityDescription.entity( forEntityName: "Country", in: managedContext)
+        
         //Peticion
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CountryNumberAlert")
         var numeroPais = ""
@@ -415,8 +418,8 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
         return numeroPais
     }
-    //Obtiene el país segun el nombre que se le pasa por parámetro
-    func getNombrePais(nombrePais: String) -> NSManagedObject{
+    //Obtiene el numero de casos segun el nombre que se le pasa por parámetro
+    func getNombrePais(nombrePais: String) -> String{
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -424,7 +427,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         var paisGuardado: [NSManagedObject]
         //Peticion
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Country")
-        var Pais: NSManagedObject!
+        var numeroPaisABuscar = ""
         
         do{
             let results = try managedContext.fetch(fetchRequest)
@@ -432,7 +435,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
 
             for paisG in paisGuardado{
                 if(nombrePais == paisG.value(forKey: "country") as! String){
-                    Pais = paisG
+                    numeroPaisABuscar = paisG.value(forKey: "total_cases") as! String
                     
                 }
             }
@@ -442,7 +445,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
             print("No ha sido posible cargar \(error), \(error.userInfo)")
             
         }
-        return Pais
+        return numeroPaisABuscar
     }
     
     // MARK: Search

@@ -533,7 +533,6 @@
         <!--Noticias-->
         <scene sceneID="MiH-zR-gpm">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="65j-Eb-ZBF" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="Qbp-IJ-S12" customClass="NoticiasViewController" customModule="PandemicNews" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AWD-bo-GSi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -616,6 +615,7 @@
                     <tabBarItem key="tabBarItem" title="Noticias" image="NoticiasSinSeleccionar" id="Afe-fZ-H3q"/>
                     <navigationItem key="navigationItem" title="Noticias" id="mWX-Jy-3V4"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="65j-Eb-ZBF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1062" y="1236"/>
         </scene>
