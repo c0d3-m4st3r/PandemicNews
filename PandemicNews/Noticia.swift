@@ -9,12 +9,13 @@
 import UIKit
 
 class Noticia {
-    
+    //Variables de noticias
     var imagen: UIImage?
     var titular: String
     var pais: String
     
     init(imagen: UIImage?, titular: String, pais: String) {
+        //Dando valor a estos atributos
         self.imagen = imagen
         self.titular = titular
         self.pais = pais

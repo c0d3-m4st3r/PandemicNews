@@ -21,39 +21,35 @@ class MapaMundiViewController: UIViewController, WKNavigationDelegate {
     var datos = "World"
     
     
-    
+    //Funcion que carga todos los datos del mundo
     private func cargaPais(){
-      
-        casosTotales.text = getCasosMundo(nombre: datos).value(forKey: "total_cases") as! String
+        //Obtenemos un objeto con todos los datos de mundo
+        let mundo = getCasosMundo(nombre: datos)
+        casosTotales.text = mundo.value(forKey: "total_cases") as! String
         paisesInfectados.text = getPaisesTotales() as! String
-        recuperadosTotales.text = getCasosMundo(nombre: datos).value(forKey: "total_recovered") as! String
+        recuperadosTotales.text = mundo.value(forKey: "total_recovered") as! String
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let detailVC = segue.destination as! HomeViewController
-        
-    }
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         cargaPais()
         
+        //Url de la webView
         let myURL = URL(string: "https://www.trackcorona.live/map")
+        //Petición de la web View
         let myRequest = URLRequest(url: myURL!)
-        
-        
+        //Cargamos la petición de la web View
         webView.load(myRequest)
         	
 
     }
-    
+    //Obtiene el número de casos que hay en todo el mundo
     func getCasosMundo(nombre: String) -> NSManagedObject{
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.persistentContainer.viewContext
-        //array de paises ya guardados en la entidad CountrySelectedAlert
+        //array de paises ya guardados en la entidad Country
         var MundoGuardado: [NSManagedObject]
         //Peticion
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Country")
@@ -62,7 +58,7 @@ class MapaMundiViewController: UIViewController, WKNavigationDelegate {
         do{
             let results = try managedContext.fetch(fetchRequest)
             MundoGuardado = results as! [NSManagedObject]
-            //Si hay algun pais lo borra puesto que solo debe haber uno
+            //Buscamos el pais mundo
             for paisG in MundoGuardado{
                 if(nombre == paisG.value(forKey: "country") as! String){
                     Pais = paisG
@@ -75,12 +71,13 @@ class MapaMundiViewController: UIViewController, WKNavigationDelegate {
             print("No ha sido posible cargar \(error), \(error.userInfo)")
             
         }
+        //Devolvemos los datos del mundo
         return Pais
     }
     
     
     
-
+    //Funcion que cuenta cuantos paises hay guardados en la bbdd de la api
     func getPaisesTotales() -> String{
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -95,7 +92,6 @@ class MapaMundiViewController: UIViewController, WKNavigationDelegate {
         do{
             let results = try managedContext.fetch(fetchRequest)
             paisesGuardados = results as! [NSManagedObject]
-            //Si hay algun pais lo borra puesto que solo debe haber uno
             for paisG in paisesGuardados{
                 if(paisG != nil){
                     contador += 1
@@ -108,7 +104,7 @@ class MapaMundiViewController: UIViewController, WKNavigationDelegate {
             print("No ha sido posible cargar \(error), \(error.userInfo)")
             
         }
-        
+        //Pasamos el número a string para que se pueda mostrar
         let numeroGuardadoInt = (contador as NSInteger).description
         return numeroGuardadoInt
     }

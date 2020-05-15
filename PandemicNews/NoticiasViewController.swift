@@ -10,6 +10,7 @@ import UIKit
 
 class NoticiasViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
+    //Variables en nuestra clase
     var noticias = [Noticia]()
     var paisCategoria = [String]()
     
@@ -21,6 +22,7 @@ class NoticiasViewController: UIViewController, UICollectionViewDataSource, UICo
     }
     
     private func cargaNoticias() {
+        //Obtenemos las fotos
         let fotoEsp1 = UIImage(named: "Esp1")
         let fotoEsp2 = UIImage(named: "Esp2")
         let fotoEsp3 = UIImage(named: "Esp3")
@@ -39,7 +41,7 @@ class NoticiasViewController: UIViewController, UICollectionViewDataSource, UICo
         let fotoAle1 = UIImage(named: "Ale1")
         let fotoAle2 = UIImage(named: "Ale2")
         let fotoAle3 = UIImage(named: "Ale3")
-
+        //Creamos los objetos tipo noticia
         let Esp1 = Noticia(imagen: fotoEsp1, titular: "Problemas en el metro", pais: "España")
         let Esp2 = Noticia(imagen: fotoEsp2, titular: "Médicos en apuros", pais: "España")
         let Esp3 = Noticia(imagen: fotoEsp3, titular: "Comparecencia del presidente", pais: "España")
@@ -58,9 +60,9 @@ class NoticiasViewController: UIViewController, UICollectionViewDataSource, UICo
         let Ale1 = Noticia(imagen: fotoAle1, titular: "Alemania, la mejor gestión del virus", pais: "Alemania")
         let Ale2 = Noticia(imagen: fotoAle2, titular: "Angela Merkel decreta el confinamiento", pais: "Alemania")
         let Ale3 = Noticia(imagen: fotoAle3, titular: "Los hospitales alemanes no se saturan", pais: "Alemania")
-
+        //Introducimos dichos objetos en el array de noticias
         noticias = [Esp1, Esp2, Esp3, UK1, UK2, UK3, EEUU1, EEUU2, EEUU3, Ita1, Ita2, Ita3, Ch1, Ch2, Ch3, Ale1, Ale2, Ale3]
-        
+        //Separamos los noticias por categorias (estas categorias seran los nombres de los paises)
         var count: Int
         for noticia in noticias{
             count = 0
@@ -75,25 +77,26 @@ class NoticiasViewController: UIViewController, UICollectionViewDataSource, UICo
         }
         
     }
-    
+    //Número de secciones de la collection view(categorias, es decir, paises)
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return paisCategoria.count
     }
     
-    
+    //Número de noticias por cada categoría
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 3
     }
+    //Creación de las celdas individuales en cada categoria
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
+        //Variable que guarda las noticias que tiene un pais
         var noticiasPais = [Noticia]()
-        
+        //Buscamos las noticias de un mismo pais y las guardamos en noticiasPais
         for noticia in noticias{
             if noticia.pais == paisCategoria[indexPath.section]{
                 noticiasPais.append(noticia)
             }
         }
-        
+        //Creamos la celda individual de cada noticia
         let identifier = "noticia"
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! NoticiasCollectionViewCell
         cell.titularNoticia.text = noticiasPais[indexPath.row].titular
@@ -103,7 +106,7 @@ class NoticiasViewController: UIViewController, UICollectionViewDataSource, UICo
         
         return cell
     }
-    
+    //Creamos las categorías y el section Header de cada una de ellas
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let sectionHeaderView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "seccionPais", for: indexPath) as! SectionHeaderCollectionReusableView
         
@@ -112,16 +115,5 @@ class NoticiasViewController: UIViewController, UICollectionViewDataSource, UICo
         
         return sectionHeaderView
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

@@ -8,6 +8,7 @@
 
 import UIKit
 
+//Section header de la collection view de noticias
 class SectionHeaderCollectionReusableView: UICollectionReusableView {
     @IBOutlet weak var tituloHeader: UILabel!
     

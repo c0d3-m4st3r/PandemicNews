@@ -8,6 +8,7 @@
 
 import UIKit
 
+//Celda individual de la collection view de noticias
 class NoticiasCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imagenNoticia: UIImageView!

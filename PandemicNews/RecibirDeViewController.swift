@@ -10,9 +10,9 @@ import UIKit
 import CoreData
 
 class RecibirDeViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
-    
+    //Array de paises totales
     public var paises = [NSManagedObject]()
-    
+    //Instacianmos el pickerView
     @IBOutlet var picker: UIPickerView!
     
     
@@ -27,18 +27,19 @@ class RecibirDeViewController: UIViewController, UIPickerViewDelegate, UIPickerV
         getRequest()
         
         
-        // Do any additional setup after loading the view.
+        
     }
-    
+    //Cargamos todos los países de la api
     func getRequest(){
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.persistentContainer.viewContext
-        
+        //Petición a la entidad country
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Country")
         
         do{
             let results = try managedContext.fetch(fetchRequest)
+            //Guardamos los paises en el array paises
             paises = results as! [NSManagedObject]
             
         }catch let error as NSError{
@@ -61,10 +62,11 @@ class RecibirDeViewController: UIViewController, UIPickerViewDelegate, UIPickerV
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return paises[row].value(forKey: "Country") as! String
     }
-    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
     }
+    
+    //Acción disparada por el botón que coge el elemento elegido en el picker y lo guarda en la entidad CountrySelectedAlert
     @IBAction func DoneButton(_ sender: Any){
         //Elemento del array elegido(int)
         let elegido = picker.selectedRow(inComponent: 0)

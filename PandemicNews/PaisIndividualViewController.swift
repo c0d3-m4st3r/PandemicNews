@@ -10,9 +10,10 @@ import UIKit
 import CoreData
 
 
-
+//View controller de la vista de pais individual(detailVC)
 class PaisIndividualViewController: UIViewController {
     
+    //Variables de la clase, que son los atributos de dicho pais
     @IBOutlet weak var banderaPais: UIImageView!
     @IBOutlet weak var nombrePais: UILabel!
     @IBOutlet weak var numInfectados: UILabel!
@@ -21,26 +22,32 @@ class PaisIndividualViewController: UIViewController {
     @IBOutlet weak var numFallecidos: UILabel!
     @IBOutlet weak var navItem: UINavigationItem!
     
-    
+    //Objetos que vienen dados por el prepare segue(se pasan de la otra vista)
     var paisIndividual: NSManagedObject?
     var index: IndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-         
+        //Cargamos los datos del pais para mostrarlo
         cargaPais()
     }
+    //Cargamos los datos del pais para mostrarlo
     private func cargaPais(){
+        
         navItem.title = "País individual"
         banderaPais.contentMode = .scaleAspectFill
-        
+        //Si tiene una url en el campo bandera la descarga
         if(paisIndividual?.value(forKey: "flag") != nil){
             banderaPais.downloaded(from: paisIndividual?.value(forKey: "flag") as! String)
         }else{
+            //Si no tiene nada en el campo bandera se mira a ver si lo tiene en el campo flagImage
             if(paisIndividual?.value(forKey: "flagImage") != nil){
+                //Si tiene se iguala la bandera a la imagen contenida aquí
                 banderaPais.image = UIImage(data :paisIndividual?.value(forKey: "flagImage") as! Data)
             }
+            //Si no se cumple ninguna de las dos anteriores condiciones el campo bandera queda vacío
         }
+        //Se rellenan el resto de campos
         nombrePais.text = paisIndividual?.value(forKey: "country") as! String
         numInfectados.text = paisIndividual?.value(forKey: "total_cases") as! String
         numCasosPor1Mill.text = paisIndividual?.value(forKey: "total_cases_per_mill_pop") as! String
@@ -49,7 +56,7 @@ class PaisIndividualViewController: UIViewController {
         
  }
     
-    
+    //Accion eliminar pais que es activada con el boton eliminar Pais, guarda el pais que esta seleccionado en la entidad de paises eliminados
     @IBAction func eliminarPais(_ sender: UIButton){
         print("Botón presionado")
         
@@ -71,27 +78,9 @@ class PaisIndividualViewController: UIViewController {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
         }
         
-        
+        //Cuando se pulse en este botón se vuelve a la vista anterior
         self.navigationController?.popViewController(animated: true)
     
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let homeView = segue.destination as! HomeViewController
-        
-        
-    }
-
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
