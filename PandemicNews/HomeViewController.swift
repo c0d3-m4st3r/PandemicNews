@@ -32,7 +32,7 @@ extension UIImageView {
 }
 
 
-class HomeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIAlertViewDelegate {
+class HomeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIAlertViewDelegate, UISearchBarDelegate {
 
     
     //Array de paises
@@ -44,6 +44,12 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    var paisesFiltrado: [NSManagedObject]!
+    
+    var searchBarActive: Bool = false
+    
     override func viewDidAppear(_ animated: Bool) {
         fetchPaises()
         
@@ -52,6 +58,9 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.searchBar.delegate = self
+        
         
         // Do any additional setup after loading the view.
         barraNavegacion.title = "Lista de paises"
@@ -157,6 +166,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
                 i += 1
             }
         }
+        paisesFiltrado = paises
         
         
         
@@ -282,7 +292,10 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return paises.count
+        if self.searchBarActive {
+            return self.paisesFiltrado!.count;
+        }
+        return self.paises.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -290,15 +303,27 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         let identifier = "pais"
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! PaisCollectionViewCell
       
-        
-        cell.nombrePais.text = paises[indexPath.row].value(forKey: "country") as? String
-        cell.numeroInfectados.text = paises[indexPath.row].value(forKey: "total_cases") as? String
-        cell.banderaPais.contentMode = .scaleAspectFill
-        if(paises[indexPath.row].value(forKey: "flag") != nil){
-            cell.banderaPais.downloaded(from: paises[indexPath.row].value(forKey: "flag") as? String ?? "")
+        if(searchBarActive){
+            cell.nombrePais.text = paisesFiltrado[indexPath.row].value(forKey: "country") as? String
+            cell.numeroInfectados.text = paisesFiltrado[indexPath.row].value(forKey: "total_cases") as? String
+            cell.banderaPais.contentMode = .scaleAspectFill
+            if(paises[indexPath.row].value(forKey: "flag") != nil){
+                cell.banderaPais.downloaded(from: paisesFiltrado[indexPath.row].value(forKey: "flag") as? String ?? "")
+            }else{
+                if(paises[indexPath.row].value(forKey: "flagImage") != nil){
+                    cell.banderaPais.image = UIImage(data :paisesFiltrado[indexPath.row].value(forKey: "flagImage") as! Data)
+                }
+            }
         }else{
-            if(paises[indexPath.row].value(forKey: "flagImage") != nil){
-                cell.banderaPais.image = UIImage(data :paises[indexPath.row].value(forKey: "flagImage") as! Data)
+            cell.nombrePais.text = paises[indexPath.row].value(forKey: "country") as? String
+            cell.numeroInfectados.text = paises[indexPath.row].value(forKey: "total_cases") as? String
+            cell.banderaPais.contentMode = .scaleAspectFill
+            if(paises[indexPath.row].value(forKey: "flag") != nil){
+                cell.banderaPais.downloaded(from: paises[indexPath.row].value(forKey: "flag") as? String ?? "")
+            }else{
+                if(paises[indexPath.row].value(forKey: "flagImage") != nil){
+                    cell.banderaPais.image = UIImage(data :paises[indexPath.row].value(forKey: "flagImage") as! Data)
+                }
             }
         }
         cell.nombrePais.textAlignment = .center
@@ -408,6 +433,60 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
             
         }
         return Pais
+    }
+    
+    // MARK: Search
+    func filterContentForSearchText(searchText:String){
+        self.paisesFiltrado = self.paises.filter({ (object: NSManagedObject) -> Bool in
+            let cadena = object.value(forKey: "country") as! String
+            return cadena.lowercased().contains(searchText.lowercased())
+        })
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        // user did type something, check our datasource for text that looks the same
+        if searchText.count > 0 {
+            // search and reload data source
+            self.searchBarActive    = true
+            self.filterContentForSearchText(searchText: searchText)
+            self.collectionView?.reloadData()
+        }else{
+            // if text lenght == 0
+            // we will consider the searchbar is not active
+            self.searchBarActive = false
+            self.collectionView?.reloadData()
+        }
+        
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.cancelSearching()
+        self.collectionView?.reloadData()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.searchBarActive = true
+        self.view.endEditing(true)
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        // we used here to set self.searchBarActive = YES
+        // but we'll not do that any more... it made problems
+        // it's better to set self.searchBarActive = YES when user typed something
+        self.searchBar!.setShowsCancelButton(true, animated: true)
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        // this method is being called when search btn in the keyboard tapped
+        // we set searchBarActive = NO
+        // but no need to reloadCollectionView
+        self.searchBarActive = false
+        self.searchBar!.setShowsCancelButton(false, animated: false)
+    }
+    func cancelSearching(){
+        self.searchBarActive = false
+        self.searchBar!.resignFirstResponder()
+        self.searchBar!.text = ""
     }
     
     

@@ -217,6 +217,7 @@
                     <connections>
                         <outlet property="barraNavegacion" destination="swY-L1-Y93" id="uJw-IA-xac"/>
                         <outlet property="collectionView" destination="KeT-0u-rPi" id="Wbo-oh-gDg"/>
+                        <outlet property="searchBar" destination="Tg3-xm-Ay6" id="aBY-1P-4PQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6SA-Jj-g00" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -400,7 +401,7 @@
                         <viewLayoutGuide key="safeArea" id="raV-Rx-3NW"/>
                     </view>
                     <connections>
-                        <outlet property="botnAñadir" destination="CSr-91-La3" id="KyW-l6-FAg"/>
+                        <outlet property="botnAñadir" destination="CSr-91-La3" id="E3m-IJ-LAe"/>
                         <outlet property="casesPerMil" destination="89A-XD-Ggo" id="ktD-EL-b5e"/>
                         <outlet property="country" destination="upH-Jc-MJ2" id="Tpz-lp-K7h"/>
                         <outlet property="deaths" destination="PoT-G7-yzQ" id="uzx-vq-h3b"/>

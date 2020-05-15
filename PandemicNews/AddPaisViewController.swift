@@ -21,6 +21,7 @@ class AddPaisViewController: UIViewController, UITextFieldDelegate, UIImagePicke
     @IBOutlet weak var casesPerMil: UITextField?
     @IBOutlet weak var totalCases: UITextField?
     
+    
 
     var imagePicker = UIImagePickerController()
     
@@ -46,6 +47,9 @@ class AddPaisViewController: UIViewController, UITextFieldDelegate, UIImagePicke
     
     @IBAction func addFoto(_ sender: Any){
         present(imagePicker, animated: true, completion: nil)
+    }
+    @IBAction func hola(_ sender: Any){
+        
     }
     
     
