@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 
-class ConfiguracionViewController: UIViewController, UIAlertViewDelegate {
+class ConfiguracionViewController: UIViewController{
 
     
     @IBOutlet var RecibirBoton: UIButton!
@@ -59,12 +59,13 @@ class ConfiguracionViewController: UIViewController, UIAlertViewDelegate {
                 print("No ha sido posible guardar \(error), \(error.userInfo)")
             }
             
-            
+            self.navigationController?.popViewController(animated: true)
             
            
         })
         //Accion cancelar que no hace nada, solo cierra la alerta
         let cancelAction = UIAlertAction(title: "Cancelar", style: .default, handler: {alert -> Void in
+            self.navigationController?.popViewController(animated: true)
             
         })
         alertController.addAction(saveAction)
@@ -77,6 +78,7 @@ class ConfiguracionViewController: UIViewController, UIAlertViewDelegate {
     override func viewDidLoad(){
         super.viewDidLoad()
         navBar.title = "Configuración"
+        
     }
     
     

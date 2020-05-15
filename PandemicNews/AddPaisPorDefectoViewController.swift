@@ -42,6 +42,7 @@ class AddPaisPorDefectoViewController: UIViewController, UIPickerViewDelegate, U
             //Guardamos los paises eliminados en paises que será el array del que el picker view coja los datos
             paises = results as! [NSManagedObject]
             
+            
         }catch let error as NSError{
             print("No ha sido posible cargar \(error), \(error.userInfo)")
             

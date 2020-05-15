@@ -289,7 +289,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
             let results = try managedContext.fetch(fetchRequest)
             if(results.count == 200) {
                 fetchPaises()
-                //muestraAlert()
+                muestraAlert()
             }
         }catch let error as NSError{
             print("No ha sido posible cargar \(error), \(error.userInfo)")
